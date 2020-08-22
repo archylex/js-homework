@@ -55,11 +55,14 @@ btn_kick_2.addEventListener('click', function () {
 function init() {
     btn_kick_1.innerText = player.character.attack[0].name;
     btn_kick_2.innerText = player.character.attack[1].name;
-    player.sprite.src = player.character.sprite;    
-    player.name.innerText = player.character.name;
-    enemy.sprite.src = enemy.character.sprite;
-    enemy.name.innerText = enemy.character.name;
+    loadPers(player);    
+    loadPers(enemy);
     update();
+}
+
+function loadPers(pers) {
+    pers.sprite.src = pers.character.sprite;    
+    pers.name.innerText = pers.character.name;
 }
 
 function update() {    
