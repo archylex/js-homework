@@ -1,18 +1,70 @@
-</<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pokemon Fight</title>
     <link rel="stylesheet" href="style.css">
-    <title>JS Homework</title>
-  </head>
-  <body>
+</head>
+<body>
+<div class="body">
+    <header>
+        <img class="logo"
+             title="Reset Game"
+             src="./assets/Pokemon_logo.png"
+             alt="Pokemon">
+    </header>
+    <div class="playground">
+        <div class="pokemon character">
+            <span class="lvl">Lv. 1</span>
 
-    <h2>Task #1</h2>
-    <div id="task1"></div>
-    <h2>Task #2</h2>
-    <div id="task2"></div>
+            <img src="http://sify4321.000webhostapp.com/pikachu.png" class="sprite" id="player-sprite">
 
-    <script src="main.js"></script>
+            <div class="details">
+                <h2 class="name" id="name-character">
+                    Pikachu
+                </h2>
+                <div class="hp">
+                    <div class="bar">
+                        <div class="health" id="progressbar-character" style="width: 100%;"></div>
+                    </div>
+                    <span class="text" id="health-character">100 / 100</span>
+                </div>
+            </div>
+        </div>
 
-  </body>
+        <div class="control">
+            <button class="button" id="btn-kick-1">
+                Thunder Jolt
+            </button>
+            <button class="button" id="btn-kick-2">
+                Thunder Jolt
+            </button>
+        </div>
+
+        <div class="pokemon enemy">
+            <span class="lvl">Lv. 1</span>
+
+            <img src="http://sify4321.000webhostapp.com/charmander.png" class="sprite" id="enemy-sprite">
+
+            <div class="details">
+                <h2 class="name" id="name-enemy">
+                    Charmander
+                </h2>
+                <div class="hp">
+                    <div class="bar">
+                        <div class="health" id="progressbar-enemy" style="width: 100%;"></div>
+                    </div>
+                    <span class="text" id="health-enemy">100 / 100</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="catch_screen"></div>
+
+<script src="main.js"></script>
+</body>
 </html>
