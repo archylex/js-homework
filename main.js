@@ -39,8 +39,11 @@ function createPers(pok_num, id_hp_text, id_hp_progress, id_sprite, id_name) {
 
 const player = createPers(0, 'health-character', 'progressbar-character', 'player-sprite', 'name-character');
 
-const enemy = createPers(Math.floor(Math.random() * pokemon.length), 'health-enemy', 'progressbar-enemy', 'enemy-sprite', 'name-enemy');
+const enemy = createPers(Math.floor(Math.random() * (pokemon.length - 1)) + 1, 'health-enemy', 'progressbar-enemy', 'enemy-sprite', 'name-enemy');
 
+let isGameOver = false;
+
+const messageBox = document.getElementById('message');
 const btn_kick_1 = document.getElementById('btn-kick-1');
 const btn_kick_2 = document.getElementById('btn-kick-2');
 
@@ -53,6 +56,7 @@ btn_kick_2.addEventListener('click', function () {
 })
 
 function init() {
+    messageBox.style.display = "none";
     btn_kick_1.innerText = player.character.attack[0].name;
     btn_kick_2.innerText = player.character.attack[1].name;
     loadPers(player);    
@@ -84,39 +88,47 @@ function updateHPProgressBar(pers) {
 }
 
 function reduceHP(pers, damage) {
-    pers.hp -= damage + (Math.round(Math.random()) * 2 - 1) * Math.ceil(Math.random() * 10 + 1);    
-    if (pers.hp < 0) pers.hp = 0;
+    if (!isGameOver) {
+        pers.hp -= damage + (Math.round(Math.random()) * 2 - 1) * Math.ceil(Math.random() * 10 + 1);    
+        if (pers.hp <= 0) {
+            pers.hp = 0;
+            gameOver(pers);
+        }
+    }
 }
 
 function enemyAttack() {
     const kick = Math.floor(Math.random() * 2);
-    console.log(kick);
     reduceHP(player, enemy.character.attack[kick].damage);
 }
 
-function attack(num) {
-    reduceHP(enemy, player.character.attack[num].damage);
-    if (checkAlive()) enemyAttack();
+function attack(num) {    
+    reduceHP(enemy, player.character.attack[num].damage);    
+    enemyAttack();
     update();
 }
 
-function checkAlive() {
-    let over = true;
+function gameOver(pers) {    
+    update(); 
     
-    if (player.hp <= 0 && enemy.hp > 0) 
-        alert("Game Over!\nAlas, " + player.character.name + " was died.");        
-    else if (enemy.hp <= 0 && player.hp > 0)
-        alert("You win!\n" + enemy.character.name + " has been defeated!");        
-    else if (enemy.hp <= 0 && player.hp <= 0)
-        alert("Tie! Both pokemon got tired of fighting and went to rest.");        
-    else over = false;
+    isGameOver = true;
+   
+    if (pers === player && enemy.hp > 0) {
+        document.getElementById('message-title').innerText = "YOU LOSE!"
+        document.getElementById('message-text').innerText = "Alas, " + player.character.name + " was died."
+    } else if (pers === enemy && player.hp > 0) {
+        document.getElementById('message-title').innerText = "YOU WON!"
+        document.getElementById('message-text').innerText = enemy.character.name + " has been defeated!";
+    } else if (enemy.hp <= 0 && player.hp <= 0) {
+        document.getElementById('message-title').innerText = "TIE!"
+        document.getElementById('message-text').innerText = "Both pokemon got tired of fighting and went to rest.";        
+    } else isGameOver = false;
     
-    if (over) {        
+    if (isGameOver) {      
+        messageBox.style.display = "block";
         btn_kick_1.disabled = true;
         btn_kick_2.disabled = true;
     }
-    
-    return !over;
 }
 
 init();

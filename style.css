@@ -474,3 +474,26 @@ h1 {
 .action label {
     padding: 6px 0;
 }
+
+#message {
+    margin-top: 45px;    
+    position: absolute;
+    width: 350px;
+    height: 220px;
+    border-radius: 25px;
+    border: 5px;
+    border-style: solid;
+    border-color: #ffffff;
+    background-color: #b5ddf7;    
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+}
+
+#message h2 {
+    color: #333333;
+}
+
+#message h3 {
+    color: #666666;
+}
