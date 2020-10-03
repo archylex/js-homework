@@ -1,95 +1,65 @@
-bond = 20;
-count = 200;
+// Task #1
 
-canvas = document.getElementById("animation");
-ctx = canvas.getContext("2d");
-fitToContainer(canvas);
+const firstRow = 'мама мыла раму';
+const secondRow = 'собака друг человека';
 
-window.onresize = function(event) {
-  fitToContainer(canvas);
+function getRow(firstRow, secondRow) {
+    let count = 0;
+    for (let i = 0; i < firstRow.length; i++)
+        if (firstRow[i] === 'а') count++;
+        
+    for (let i = 0; i < secondRow.length; i++)
+        if (secondRow[i] === 'а') count--;
+        
+    return count < 0 ? secondRow : firstRow;
 }
 
-function fitToContainer(canvas){
-  canvas.style.width='100%';
-  canvas.style.height='100%';
-  canvas.width  = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
+console.log(getRow(firstRow, secondRow)); // мама мыла раму
+document.getElementById("task1").innerHTML = getRow(firstRow, secondRow);
+
+// Task #2
+let num;
+let result = "";
+
+while(true) {
+  num = prompt("Enter phone number");
+  if (num[0] === '+' && !isNaN(num.slice(1,12)) && num.length === 12) break;
 }
 
-function Particle(x, y, r, col) {
-  this.x = x;
-  this.y = y;
-  this.r = r;
-  this.col = col;
-
-  this.vx = (Math.random() * 3) + 0.1;
-  this.vx *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-  this.vy = (Math.random() * 3) + 0.1;
-  this.vy *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-
-  this.draw = function() {
-    ctx.beginPath();
-    ctx.fillStyle = this.col;
-    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
-    ctx.fill();
-  }
-
-  this.animate = function() {
-    this.x += this.vx;
-    this.y += this.vy;
-
-    if (this.x + this.r > canvas.width || this.x - this.r < 0)
-      this.vx *= -1;
-
-    if (this.y + this.r > canvas.height || this.y - this.r < 0)
-      this.vy *= -1;
-
-    this.draw();
-  }
-}
-
-particles = [];
-
-for (let a = 1; a < count; ++a) {
-  const radius = Math.floor(Math.random() * 9) + 1;
-  const x = Math.random() * (canvas.width - 2 * radius) + radius;
-  const y = Math.random() * (canvas.height - 2 * radius) + radius;
-  const color = "#" + Math.floor((180 * radius / 10) + 75).toString(16).repeat(2) + "ff";
-
-  particles.push(new Particle(x, y, radius, color));
-}
-
-function Lines() {
-  for (let a = 0; a < particles.length; a++) {
-    for (let b = a + 1; b < particles.length; b++) {
-      const dist = Math.sqrt(Math.pow(particles[a].x - particles[b].x, 2) + Math.pow(particles[a].y - particles[b].y, 2));
-      const maxR = Math.max(particles[a].r, particles[b].r);
-
-      if (dist < bond * maxR) {
-        ctx.beginPath();
-        ctx.save();
-        ctx.globalAlpha = (bond * maxR - dist) / bond / maxR;
-        ctx.strokeStyle = "#ffffff";
-        ctx.moveTo(particles[a].x, particles[a].y);
-        ctx.lineTo(particles[b].x, particles[b].y);
-        ctx.stroke();
-        ctx.restore();
-      }
+for (let i = 0; i < num.length; i++) {
+    result += num[i];
+    
+    switch(i) {
+        case 1: 
+            result += " (";
+            break;
+        case 4:
+            result += ") ";
+            break;
+        case 7:
+            result += "-";
+            break;
+        case 9:
+            result += "-";
+            break;
     }
-  }
 }
 
-function Update () {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+document.getElementById("task2").innerHTML = result;
+alert(result);
 
-  Lines();
+// Old version
+/*String.prototype.InsertStr = function(index, str) {
+    return this.slice(0, index) + str + this.slice(index);
+};
 
-  for (let a = 0; a < particles.length; a++) {
-    const particle = particles[a];
-    particle.animate();
-  }
+let num;
 
-  requestAnimationFrame(Update);
+while(true) {
+  num = prompt("Enter phone number");
+  if (num[0] === '+' && !isNaN(num.slice(1,12)) && num.length === 12) break;
 }
 
-Update();
+let result = num.InsertStr(2, " (").InsertStr(7, ") ").InsertStr(12, "-").InsertStr(15, "-");
+
+alert(result);*/
